@@ -1,7 +1,7 @@
 import os
 from google import genai
 
-API_Key = os.getenv("GOOGLE_API_KEY", "")  #put your API key in the quotes
+API_Key = os.getenv("GOOGLE_API_Key", "")  #put your API key in the quotes
 
 client = genai.Client(api_key = API_KEY)
 
@@ -38,3 +38,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
