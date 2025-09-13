@@ -7,3 +7,5 @@ yeah i can do it
 Test /T
 
 nice!! /Dan
+
+https://ai.google.dev/gemini-api/docs/quickstart  - J
