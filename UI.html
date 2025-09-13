@@ -46,7 +46,8 @@
     }
 
     .image-section {
-      flex: 1;
+        flex: 1;
+        display: none; /* Hide initially */
     }
 
     .image-section img {
@@ -54,6 +55,12 @@
       height: auto;
       display: block;
     }
+
+    .audio-player {
+        display: none; /* Hide initially */
+        margin-top: 20px;
+    }
+
 
     @media (max-width: 768px) {
       .container {
@@ -71,43 +78,49 @@
   <div class="container">
     <!-- Text on the left -->
     <div class="text-section">
-      <h1 style="text-align:center">Music Type</h1>
-      <p style="text-align:center">
-        Welcome to our platform! Explore articles, tutorials, and insights that help you learn
-        and grow. Whether you're a beginner or an expert, there's something here for you.
-      </p>
-      <!-- Upload button -->
-      <button onclick="document.getElementById('fileInput').click()">Upload Song</button>
+        <h1 style="text-align:center">Music Genre</h1>
+        <p style="text-align:center">
+        Upload your favorite song and we'll identify its genre for you!
+        </p>
+        
+        <!-- Upload button -->
+        <button onclick="document.getElementById('fileInput').click()">Upload Song</button>
 
-    <!-- Hidden file input (only accepts mp3, ogg, wav) -->
-    <input type="file" id="fileInput" accept="audio/mpeg, audio/ogg, audio/wav" style="display: none">
+        <!-- Hidden file input (only accepts mp3, ogg, wav) -->
+        <input type="file" id="fileInput" accept="audio/mpeg, audio/ogg, audio/wav" style="display: none">
 
-    <!-- Audio player -->
-    <div class="audio-player">
-        <audio id="myAudio" controls>
-        Your browser does not support the audio element.
-    </audio>
-    </div>
-
-    <script>
-        const fileInput = document.getElementById('fileInput');
-        const audio = document.getElementById('myAudio');
-
-        fileInput.addEventListener('change', function () {
-            const file = this.files[0];
-        if (file) {
-            const url = URL.createObjectURL(file);
-            audio.src = url;
-            audio.play(); // optional: autoplay after upload
-        }
-        });
-    </script>
+        <!-- Audio player -->
+        <div class="audio-player">
+            <audio id="myAudio" controls>
+            Your browser does not support the audio element.
+        </audio>
+        </div>
     </div>
 
     <!-- Image on the right -->
     <div class="image-section">
       <img src="https://imgs.search.brave.com/bhWJSs8Q2HbTLcy9N0rZR9cvxFvu8yFThccNNt30JLw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly92ZW50/aWxhdGlvbi1zeXN0/ZW0uY29tL3VwbG9h/ZC9waG90b3MvMDE4/OTY3NTAwMTY4ODY1/NDQzMS5wbmc" alt="Sample Image">
     </div>
+
+    <!-- JavaScript to handle file upload and display audio player and image -->
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const audio = document.getElementById('myAudio');
+
+        fileInput.addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const url = URL.createObjectURL(file);
+                audio.src = url;
+
+                // Show audio player
+                document.querySelector('.audio-player').style.display = 'block';
+
+                // Show the image section
+                document.querySelector('.image-section').style.display = 'block';
+            }
+        });
+    </script>
   </div>
 </body>
 </html>
