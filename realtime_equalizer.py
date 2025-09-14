@@ -1,6 +1,7 @@
 import socketio
 import asyncio
 import random
+import time
 
 sio = socketio.AsyncClient()
 streaming = False
@@ -32,6 +33,7 @@ async def on_begin_stream(data):
 
 async def main():
     await sio.connect("http://localhost:8000")
+
     chunk = 0
     while True:
         if streaming:

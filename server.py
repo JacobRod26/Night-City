@@ -1,48 +1,46 @@
 import socketio
+import uvicorn
 from fastapi import FastAPI
-from fastapi.responses import FileResponse
 
-# --- Setup ---
 sio = socketio.AsyncServer(async_mode="asgi", cors_allowed_origins="*")
 app = FastAPI()
-app.mount("/socket.io", socketio.ASGIApp(sio))
+asgi_app = socketio.ASGIApp(sio, app)
 
-# Serve the UI
-@app.get("/")
-async def root():
-    return FileResponse("UI.html")
-
-# --- Events ---
 @sio.event
 async def connect(sid, environ):
-    print(f"Client connected: {sid}")
+    print("Client connected:", sid)
 
 @sio.event
 async def disconnect(sid):
-    print(f"Client disconnected: {sid}")
+    print("Client disconnected:", sid)
 
-@sio.on("start_eq")
-async def start_eq(sid, data):
-    print(f"EQ start requested: {data}")
-    await sio.emit("begin_stream", data)
-
+# Forward user input to AI
 @sio.on("user_input")
-async def user_input(sid, data):
+async def on_user_input(sid, data):
     print("User input:", data)
     await sio.emit("user_input", data)
 
+# Forward EQ start request to EQ service
+@sio.on("start_eq")
+async def start_eq(sid, data):
+    print(f"EQ start requested for {data.get('filename')}")
+    # Broadcast to EQ service (so realtime_equalizer starts generating)
+    await sio.emit("begin_stream", data)
+
+# Forward EQ data to AI + Visualizer
 @sio.on("eq_data")
-async def eq_data(sid, data):
+async def on_eq_data(sid, data):
     await sio.emit("eq_data", data)
 
+# Forward AI instructions to Visualizer + UI
 @sio.on("ai_instructions")
-async def ai_instructions(sid, data):
+async def on_ai_instructions(sid, data):
     await sio.emit("ai_instructions", data)
 
+# Forward visualizer frames to UI
 @sio.on("frame")
-async def frame(sid, data):
+async def on_frame(sid, data):
     await sio.emit("frame", data)
 
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(asgi_app, host="0.0.0.0", port=8000)
