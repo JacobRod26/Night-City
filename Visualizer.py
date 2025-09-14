@@ -58,10 +58,21 @@ def render_visuals(instructions, eq_data):
             pygame.draw.circle(screen, col, (cx, cy), radius, 0)
 
     elif shape == "bars":
-        bar_width = WIDTH // len(colors)
+        total_bars = len(colors)
+        bar_spacing = 20  # space between bars
+
+        # Calculate bar width based on available width minus spacing
+        total_spacing = bar_spacing * (total_bars - 1)
+        max_bar_width = 200  # or any max width you want per bar
+        total_bars_width = total_bars * max_bar_width + total_spacing
+
+        # Calculate starting X so bars are centered
+        start_x = (WIDTH - total_bars_width) // 2
+
         for i, col in enumerate(colors):
-            bar_height = int(level * (i + 1) * 30)
-            pygame.draw.rect(screen, col, (i * bar_width, HEIGHT - bar_height, bar_width - 5, bar_height))
+            bar_height = 300 + int(level * (i + 1) / len(colors))
+            x = start_x + i * (max_bar_width + bar_spacing)
+            pygame.draw.rect(screen, col, (x, HEIGHT - bar_height, max_bar_width, bar_height))
 
 def send_frame():
     raw_str = pygame.image.tostring(screen, "RGB")
