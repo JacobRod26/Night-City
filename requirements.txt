@@ -1,8 +1,0 @@
-fastapi
-uvicorn[standard]
-python-socketio[asyncio_client]
-python-socketio[asgi]
-google-genai
-pygame
-opencv-python
-numpy
