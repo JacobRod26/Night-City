@@ -256,28 +256,34 @@
       }
     });
 
+    let hasLoadedFirstFrame = false;
+
     socket.on("frame", (payload) => {
       try {
         if (!payload || !payload.frame_b64) {
           throw new Error("Invalid frame data received");
         }
-        frameDisplay.src = "data:image/jpeg;base64," + payload.frame_b64;
+
+        const frameSrc = "data:image/jpeg;base64," + payload.frame_b64;
+
+        frameDisplay.onload = () => {
+          if (!hasLoadedFirstFrame) {
+            hasLoadedFirstFrame = true;
+            document.querySelector('.image-section').style.display = 'block';
+          }
+        };
+
+        frameDisplay.src = frameSrc;
       } catch (err) {
         console.error("Error displaying frame:", err);
       }
     });
 
-
-    function sendUserInput(colors, style){
-      socket.emit("user_input", { colors, style });
-    }
-
     fileInput.addEventListener('change', function(){
       const file = this.files[0];
       if (!file) return;
 
-      // File type validation
-      if (!file.type.startsWith('audio/')) {
+    if (!file.type.startsWith('audio/')) {
         alert("Please upload a valid audio file (MP3, OGG, WAV).");
         return;
       }
@@ -286,43 +292,33 @@
         const url = URL.createObjectURL(file);
         audio.src = url;
 
-        // UI updates...
-       infoText.style.display = 'none';
+        // UI updates
+        infoText.style.display = 'none';
         document.querySelector('.audio-player').style.display = 'block';
-        document.querySelector('.image-section').style.display = 'block';
+        document.querySelector('.image-section').style.display = 'block'; // ✅ Ensure loading.gif is visible
 
         const container = document.querySelector('.container');
         container.style.maxWidth = '1000px';
         container.style.padding = '20px';
 
-       uploadButton.textContent = 'Try Another Song!';
-       uploadButton.classList.remove('floating');
+        uploadButton.textContent = 'Try Another Song!';
+        uploadButton.classList.remove('floating');
 
-       document.querySelector('.control-buttons').style.display = 'flex';
+        document.querySelector('.control-buttons').style.display = 'flex';
 
-       sendUserInput(
-          [document.getElementById('c1').value,
-          document.getElementById('c2').value,
-          document.getElementById('c3').value],
-          document.getElementById('style').value
-        );
-      } catch (err) {
-        console.error("Error loading file:", err);
-        alert("Something went wrong while loading the audio file.");
-      }
-    });
+        // Reset visualizer to loading placeholder
+        hasLoadedFirstFrame = false;
+        frameDisplay.src = 'loading.gif';
 
-    document.getElementById('applyBtn').addEventListener('click', () => {
-      try {
         sendUserInput(
           [document.getElementById('c1').value,
            document.getElementById('c2').value,
            document.getElementById('c3').value],
-         document.getElementById('style').value
-      );
+           document.getElementById('style').value
+        );
       } catch (err) {
-        console.error("Error applying settings:", err);
-        alert("Could not apply visualization settings.");
+        console.error("Error loading file:", err);
+        alert("Something went wrong while loading the audio file.");
       }
     });
   </script>
