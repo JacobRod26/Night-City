@@ -1,199 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Text Left, Image Right</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Text Left, Image Right</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    @font-face {   
-        font-family: 'ErasBoldITC';
-        src: url('fonts/ERASBD.TTF') format('truetype');
-        font-weight: normal;
-        font-style: normal;
-    }
+        @font-face {   
+            font-family: 'ErasBoldITC';
+            src: url('fonts/ERASBD.TTF') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
     
-    @font-face {   
-        font-family: 'VeraHumana95Bold';
-        src: url('fonts/verahb.ttf') format('truetype');
-        font-weight: normal;
-        font-style: normal;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background-image:url("music1.gif");
-    }
-
-    .container {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      max-width: 500px;
-      margin: auto;
-      background: white;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      transition: all 1.0s ease;
-    }
-
-    .text-section {
-      flex: 1;
-      padding: 30px;
-    }
-
-    .text-section h1 {
-        margin-bottom: 15px;
-        font-family: 'ErasBoldITC', sans-serif;
-        font-weight: bold;
-        font-size: 2.5em;
-        color: #A57DC6;
-        text-shadow: 2px 3px 0px rgb(0, 0, 0);
-    }
-
-    .text-section p {
-        color: #000000;
-        font-family: 'VeraHumana95Bold', sans-serif;
-        font-weight: bold;
-        line-height: 1.6;
-    }
-
-    .image-section {
-        flex: 1;
-        display: none; /* Hide initially */
-    }
-
-    .image-section img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .custom-upload-button {
-        display: inline-block;
-        padding: 12px 24px;
-        background-color: #A57DC6;
-        color: white;
-        font-size: 1em;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        font-family: 'ErasBoldITC', sans-serif;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-
-    .custom-upload-button:hover {
-        background-color: #8f5db2;
-    }
-
-    @keyframes float {
-        0% {
-            transform: translateY(0px);
+        @font-face {   
+            font-family: 'VeraHumana95Bold';
+            src: url('fonts/verahb.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
         }
-        50% {
-            transform: translateY(-8px);
+
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-image:url("music1.gif");
         }
-        100% {
-            transform: translateY(0px);
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            max-width: 500px;
+            margin: auto;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: all 1.0s ease;
+            background: white;
         }
-    }
 
-    .floating {
-        animation: float 2.5s ease-in-out infinite;
-    }
+        .text-section {
+            flex: 1;
+            padding: 30px;
+        }
 
-    .audio-player {
-        display: none; /* Hide initially */
-        margin-top: 20px;
-    }
+        .text-section h1 {
+            margin-bottom: 15px;
+            font-family: 'ErasBoldITC', sans-serif;
+            font-weight: bold;
+            font-size: 2.5em;
+            color: #A57DC6;
+            text-shadow: 2px 3px 0px rgb(0, 0, 0);
+        }
+
+        .text-section p {
+            color: #000000;
+            font-family: 'VeraHumana95Bold', sans-serif;
+            font-weight: bold;
+            line-height: 1.6;
+        }
+
+        .image-section {
+            flex: 1;
+            display: none; /* Hide initially */
+        }
+
+        .image-section img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .custom-upload-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #A57DC6;
+            color: white;
+            font-size: 1em;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-family: 'ErasBoldITC', sans-serif;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .custom-upload-button:hover {
+            background-color: #8f5db2;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .floating {
+            animation: float 2.5s ease-in-out infinite;
+        }
+
+        .audio-player {
+            display: none; /* Hide initially */
+            margin-top: 20px;
+        }
 
 
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
 
-      .text-section,
-      .image-section {
-        width: 100%;
-      }
-    }
-  </style>
+            .image-section {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <!-- Text on the left -->
         <div class="text-section">
-        <h1 style="text-align:center">Music Genre</h1>
-        <p style="text-align:center">
-            Upload your favorite song and we'll identify its genre for you!
-        </p>
+            <h1 style="text-align:center">Music Genre</h1>
+            <p style="text-align:center">
+                Upload your favorite song and we'll identify its genre for you!
+            </p>
 
-        <!-- Audio player -->
-        <div class="audio-player">
-            <audio id="myAudio" controls>
-                Your browser does not support the audio element.
-            </audio>
+            <!-- Audio player -->
+            <div class="audio-player">
+                <audio id="myAudio" controls>
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+
+            <!-- Custom upload button below audio player -->
+            <div class="upload-wrapper" style="text-align: center; margin-top: 20px;">
+                <label for="fileInput" class="custom-upload-button floating">Upload Song</label>
+                <input type="file" id="fileInput" accept="audio/mpeg, audio/ogg, audio/wav" style="display: none;">
+            </div>
         </div>
 
-        <!-- Custom upload button below audio player -->
-        <div class="upload-wrapper" style="text-align: center; margin-top: 20px;">
-            <label for="fileInput" class="custom-upload-button floating">Upload Song</label>
-            <input type="file" id="fileInput" accept="audio/mpeg, audio/ogg, audio/wav" style="display: none;">
+        <!-- Image on the right -->
+        <div class="image-section">
+            <img src="https://imgs.search.brave.com/bhWJSs8Q2HbTLcy9N0rZR9cvxFvu8yFThccNNt30JLw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly92ZW50/aWxhdGlvbi1zeXN0/ZW0uY29tL3VwbG9h/ZC9waG90b3MvMDE4/OTY3NTAwMTY4ODY1/NDQzMS5wbmc" alt="Sample Image">
         </div>
-    </div>
-
-    <!-- Image on the right -->
-    <div class="image-section">
-      <img src="https://imgs.search.brave.com/bhWJSs8Q2HbTLcy9N0rZR9cvxFvu8yFThccNNt30JLw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly92ZW50/aWxhdGlvbi1zeXN0/ZW0uY29tL3VwbG9h/ZC9waG90b3MvMDE4/OTY3NTAwMTY4ODY1/NDQzMS5wbmc" alt="Sample Image">
-    </div>
 
     
 
-    <!-- JavaScript to handle file upload and display audio player and image -->
-    <script>
-        const fileInput = document.getElementById('fileInput');
-        const audio = document.getElementById('myAudio');
-        const uploadButton = document.querySelector('.custom-upload-button');
-        const infoText = document.querySelector('.text-section p');
+        <!-- JavaScript to handle file upload and display audio player and image -->
+        <script>
+            const fileInput = document.getElementById('fileInput');
+            const audio = document.getElementById('myAudio');
+            const uploadButton = document.querySelector('.custom-upload-button');
+            const infoText = document.querySelector('.text-section p');
 
-        fileInput.addEventListener('change', function () {
-            const file = this.files[0];
-            if (file) {
-                const url = URL.createObjectURL(file);
-                audio.src = url;
+            fileInput.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file) {
+                    const url = URL.createObjectURL(file);
+                    audio.src = url;
         
-                // Hide the paragraph text
-                infoText.style.display = 'none';
+                    // Hide the paragraph text
+                    infoText.style.display = 'none';
 
-                // Show audio player
-                document.querySelector('.audio-player').style.display = 'block';
+                    // Show audio player
+                    document.querySelector('.audio-player').style.display = 'block';
 
-                // Show the image section
-                document.querySelector('.image-section').style.display = 'block';
+                    // Show the image section
+                    document.querySelector('.image-section').style.display = 'block';
 
-                // Enlarge the container
-                const container = document.querySelector('.container');
-                container.style.maxWidth = '1000px'; // Increase width
-                container.style.padding = '20px';   // Optional: add some padding
+                    // Enlarge the container
+                    const container = document.querySelector('.container');
+                    container.style.maxWidth = '1000px'; // Increase width
+                    container.style.padding = '20px';   // Optional: add some padding
                 
-                //Change button text
-                uploadButton.textContent = 'Try Another Song!';
+                    //Change button text
+                   uploadButton.textContent = 'Try Another Song!';
 
-                // Stop floating animation
-                uploadButton.classList.remove('floating');
-            }
-        });
-    </script>
-  </div>
+                    // Stop floating animation
+                    uploadButton.classList.remove('floating');
+                }
+            });
+        </script>
+    </div>
 </body>
 </html>
