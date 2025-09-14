@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Music Visualizer</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#111; color:#fff; text-align:center; }
+    .controls { margin: 20px; }
+    input[type="color"], select { margin: 10px; }
+    #frameDisplay { 
+      margin-top:20px; 
+      max-width:800px; 
+      border:2px solid #A57DC6; 
+      border-radius:8px; 
+      display:none; /* hidden until AI plan ready */
+    }
+    #statusMsg {
+      margin-top:15px;
+      font-size:1.1em;
+      color:#A57DC6;
+    }
+    .apply-button, .custom-upload-button {
+      padding:10px 20px; margin:10px;
+      background:#A57DC6; border:none; border-radius:6px; color:#fff; cursor:pointer;
+    }
+    .apply-button:hover, .custom-upload-button:hover { background:#8f5db2; }
+  </style>
+</head>
+<body>
+  <h1>AI Music Visualizer</h1>
+  <p>Upload a song, choose colors & style, and see live visuals.</p>
+
+  <!-- Audio -->
+  <audio id="myAudio" controls style="display:none;"></audio>
+
+  <!-- Upload -->
+  <div>
+    <label for="fileInput" class="custom-upload-button">Upload Song</label>
+    <input type="file" id="fileInput" accept="audio/*" style="display:none;">
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <input type="color" id="c1" value="#FF0000">
+    <input type="color" id="c2" value="#00FF00">
+    <input type="color" id="c3" value="#0000FF">
+    <select id="style">
+      <option value="circles">Circles</option>
+      <option value="radial_lines">Radial Lines</option>
+      <option value="bars">Bars</option>
+    </select>
+    <button id="applyBtn" class="apply-button">Apply Settings</button>
+  </div>
+
+  <!-- Status -->
+  <div id="statusMsg">Waiting for upload...</div>
+
+  <!-- Visualizer frame -->
+  <img id="frameDisplay" alt="Visualizer Frame"/>
+
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script>
+    const socket = io("http://localhost:8000", {transports:["websocket"]});
+    const fileInput = document.getElementById('fileInput');
+    const audio = document.getElementById('myAudio');
+    const frameDisplay = document.getElementById('frameDisplay');
+    const statusMsg = document.getElementById('statusMsg');
+
+    socket.on("connect", ()=>console.log("Connected to server"));
+    socket.on("disconnect", ()=>console.log("Disconnected"));
+
+    // Show frames only after AI plan is ready
+    socket.on("frame", (payload)=>{
+      if (frameDisplay.style.display !== "none") {
+        frameDisplay.src = "data:image/jpeg;base64,"+payload.frame_b64;
+      }
+    });
+
+    // Unlock visuals when AI plan arrives
+    socket.on("ai_instructions", (plan)_
