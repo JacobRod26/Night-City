@@ -5,7 +5,7 @@ import json
 from google import genai
 
 SIO_URL = "http://localhost8000"
-API_Key = os.getenv("GOOGLE_API_KEY", "AIzaSyCNHY3ngXuDhsnbEe40euScYuePzMfi_HM")  #put your API key in the quotes
+API_Key = os.getenv("GOOGLE_API_KEY", "")  #put your API key in the quotes
 client = genai.Client(api_key = API_Key)
 
 sio = socketio.AsyncClient()
@@ -70,4 +70,5 @@ async def main()
     await sio.wait()
 
 if __name__ == "__main__":
+
     asyncio.run(main())
